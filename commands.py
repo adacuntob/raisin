@@ -172,7 +172,13 @@ def run_command(message_data):
         if len(args) == 1 and args[0] == "auto":
             auto = True
         slots.start(sender, channel, slots.Games.HARD, auto=auto)
-
+        
+    elif command == "cash-slot":
+        auto = False
+        if len(args) == 1 and args[0] == "auto":
+            auto = True
+        slots.start(sender, channel, slots.Games.EYY, auto=auto)
+        
     elif command == "slot-stop":
         slots.stop(sender, channel)
 
