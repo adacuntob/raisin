@@ -19,6 +19,7 @@ CHIP_VALUE = 0.01
 class Games(Enum):
     EASY = 1
     HARD = 2
+    EYY = 3
 
 # Easy slots
 EASY_REELS = (
@@ -31,6 +32,15 @@ EASY_SYMBOLS = ("egg", "carrot", "grass")
 EASY_PRIZES = (20000, 1000, 420)
 EASY_BET = 100
 
+# Cash Machine
+EYY_REELS = (
+    (0.1,0.9),
+    (0.1,0.9),
+    (0.1,0.9),
+)
+EYY_SYMBOLS = ("(_)_)==D~","(.)(.)")
+EYY_PRICES = (1000000000,50000000)
+EYY_BET = 1
 
 # Hard slots
 HARD_REELS = (
@@ -52,6 +62,8 @@ def start(sender, channel, game, auto=False):
         reels, symbols, prizes, bet = EASY_REELS, EASY_SYMBOLS, EASY_PRIZES, EASY_BET
     elif game == Games.HARD:
         reels, symbols, prizes, bet = HARD_REELS, HARD_SYMBOLS, HARD_PRIZES, HARD_BET
+    elif game == Games.EYY:
+        reels, symbols, prizes, bet = EYY_REELS, EYY_SYMBOLS, EYY_PRIZES, EYY_BET
     else:
         message_queue.add(channel, "that game doesn't exist")
         return
@@ -83,7 +95,7 @@ def auto_play(sender, channel, reels, symbols, prizes, bet):
     slots_logger.info(f"{sender} started auto-play with {chips[sender]} chips")
     while chips[sender] >= bet and sender in ongoing_games:
         single_play(sender, channel, reels, symbols, prizes, bet)
-        time.sleep(1.5)
+        time.sleep(0.6)
     sys.exit()
 
 
